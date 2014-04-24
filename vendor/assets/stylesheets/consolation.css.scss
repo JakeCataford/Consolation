@@ -1,0 +1,129 @@
+unselectable {
+   -webkit-user-select: none; /* Chrome/Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+
+    /* Rules below not implemented in browsers yet */
+    -o-user-select: none;
+    user-select: none;
+}
+
+.consolation-console {
+  display: block;
+  overflow-y: scroll;
+  cursor: pointer;
+  font-family: 'inconsolata', monospace;
+  background: #002b36;
+  padding: 0px 0px;
+  border-radius: 6px;
+  -webkit-box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  border: 0px;
+  border-spacing: 0px;
+
+  a {
+    color: inherit;
+  }
+  .consolation-line-number {
+    @extend unselectable;
+    color: #657b83;
+    padding: 0px 10px 0px 10px;
+    background: rgba(255,255,255,0.05);
+    margin: 0px;
+    text-align: right;
+    vertical-align: top;
+  }
+
+  .consolation-line {
+    @extend unselectable;
+    color: #839496;
+    padding-left: 15px;
+    padding-right: 15px;
+    vertical-align: top;
+
+    &:hover {
+      background: rgba(255,255,255,0.05);
+    }
+
+    &.selected {
+      background: rgba(0,127,255,0.2);
+    }
+  }
+
+  .consolation-padding-line-number {
+    @extend .consolation-line-number
+  }
+
+  .consolation-padding-line {
+    @extend .consolation-line
+  }
+
+  .consolation-truncation {
+    @extend .consolation-line;
+    background: rgba(255,255,255,0.05);
+  }
+
+  .consolation-truncation-line-number {
+    @extend .consolation-line-number
+  }
+}
+
+.consolation-ansi-green {
+  color: #859900
+}
+
+.consolation-ansi-cyan {
+  color: #2aa198
+}
+
+.consolation-ansi-blue {
+  color: #268bd2
+}
+
+.consolation-ansi-magenta {
+  color: #6c71c4
+}
+
+.consolation-ansi-red {
+  color: #dc322f
+}
+
+.consolation-ansi-orange {
+  color: #cb4b16
+}
+
+.consolation-ansi-yellow {
+  color: #b58900
+}
+
+.consolation-ansi-bold {
+  color: #93a1a1;
+  font-weight: bold;
+}
+
+.consolation-copy-prompt {
+    background: #DDD;
+    position: fixed;
+    width: 16px;
+    height: 16px;
+    padding: 4px;
+    border-radius: 20px;
+    overflow: hidden;
+    opacity: 0.0;
+
+    .ready {
+      display: block;
+    }
+    img {
+      float: left;
+      width: 16px;
+      height: 16px;
+    }
+    span {
+      font-family: 'inconsolata', monospace;
+      font-size: 8px;
+      display: block
+    }
+}
