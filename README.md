@@ -1,7 +1,7 @@
 Consolation
 ------
 
-![](https://www.dropbox.com/s/4fwvqs9l7j8fx7d/Screenshot%202014-04-24%2016.43.30.png)
+demo: https://consolation.herokuapp.com
 
 *Consolation:* a console log widget for rails.
 
