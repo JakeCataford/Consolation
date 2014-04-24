@@ -1,6 +1,8 @@
 Consolation
 ------
 
+![](https://www.dropbox.com/s/4fwvqs9l7j8fx7d/Screenshot%202014-04-24%2016.43.30.png)
+
 *Consolation:* a console log widget for rails.
 
 Print color escaped console output by calling `<%= console @your_log_output%>`
