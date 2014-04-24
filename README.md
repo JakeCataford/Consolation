@@ -1,4 +1,5 @@
-= Consolation
+Consolation
+------
 
 *Consolation:* a console log widget for rails.
 
@@ -17,29 +18,29 @@ Setup
 1. add `gem 'consolation', git: "https://github.com/jakecataford/consolation` to your gemfile and `bundle install`.
 2. require the css and javascript in the controllers where you want to display a console via sprockets:
 
-For example, in `application.js` you could do:
-```
-//= require consolation
-```
+   For example, in `application.js` you could do:
+   ```
+   //= require consolation
+   ```
 
-and in `application.css` you could do:
-```
-//= require consolation
-```
+   and in `application.css` you could do:
+   ```
+   //= require consolation
+   ```
 
 3. Include the module in your application helper:
 
-```Ruby
-module ApplicationHelper
-  include Consolation
-end
-```
+  ```Ruby
+  module ApplicationHelper
+    include Consolation
+  end
+  ```
 
 4. Then in your erb views just call the helper:
 
-```Ruby
-<%= console @some_string_with_the_console_output %>
-```
+  ```Ruby
+  <%= console @some_string_with_the_console_output %>
+  ```
 
 Features
 ----
