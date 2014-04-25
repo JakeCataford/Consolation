@@ -1,4 +1,7 @@
-# desc "Explaining what the task does"
-# task :consolation do
-#   # Task goes here
-# end
+require 'fileutils'
+namespace :consolation do
+  desc "Explaining what the task does"
+  task :generate do
+    
+  end
+end

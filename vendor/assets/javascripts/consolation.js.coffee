@@ -1,5 +1,8 @@
 #=require jquery
+#=require jquery.easing
 #=require zeroclipboard
+#=require jquery.spin
+
 unless $? || jQuery?
   throw "Consolation Error: jQuery is a dependency of consolation."
 
@@ -41,7 +44,7 @@ class Console
   drag_end: (event) =>
     @copy_prompt.fadeTo(1.0, 30)
     clearTimeout(@current_timeout_id)
-    @copy_prompt.animate { top: @copy_prompt.offset().top - $(window).scrollTop() - 35, opacity: 0, width: @starting_width}, 500, =>
+    @copy_prompt.animate { top: @copy_prompt.offset().top - $(window).scrollTop() - 35, opacity: 0, width: @starting_width}, 500, 'easeInBack', =>
       @copy_prompt.removeClass('ready')
     @line_drag_to = $(event.delegateTarget).data('line')
     @element.find('.consolation-line').removeClass("selected")
@@ -52,10 +55,13 @@ class Console
         if @is_in_range($(elem).data('line'), @line_drag_start, @line_drag_to)
           text_to_copy += $(elem).text()
     console.log @clipboard.setText text_to_copy
+    @line_drag_start = -1
+    @line_drag_end = -1
+    @element.find('.consolation-line').removeClass("selected")
 
   drag_cancel: (event) =>
     clearTimeout(@current_timeout_id)
-    @copy_prompt.animate { top: @copy_prompt.offset().top - $(window).scrollTop() + 35, opacity: 0, width: @starting_width}, 250, =>
+    @copy_prompt.animate { top: @copy_prompt.offset().top - $(window).scrollTop() + 35, opacity: 0, width: @starting_width}, 250, 'easeInBack', =>
       @copy_prompt.removeClass('ready')
 
     @line_drag_start = -1
@@ -72,11 +78,21 @@ class Console
   init: () ->
     @bind_to_events()
 
+  live_message_recieved: (event) =>
+    if event.data.match(/^EOF\s/)
+      event.target.close()
+    else
+      @element.find('.consolation-ajax-placeholder').before(event.data)
+
   constructor: (@element, @line_drag_start = -1, @line_drag_to = -1) ->
     @copy_prompt = $(@element.parent().find('.consolation-copy-prompt')[0])
     @current_timeout_id = 0
     @starting_width = @copy_prompt.width()
     @clipboard = new ZeroClipboard();
+    if @element.data('live-source')
+      @element.find('.placeholder').spin()
+      @event_source = new EventSource(@element.data('live-source'))
+      @event_source.onmessage = @live_message_recieved
 
 class Consolation
 
