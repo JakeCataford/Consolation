@@ -1,4 +1,5 @@
-class Consolation::Adapters
+module Consolation
+  module Adapters
   class Base
     def has_new_lines?
       return false
@@ -16,4 +17,5 @@ class Consolation::Adapters
       return true
     end
   end
+end
 end

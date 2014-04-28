@@ -1,4 +1,5 @@
-module Consolation::LogSource
+module Consolation
+  module LogSource
   include ActionController::Live
   include Consolation
   def listen adapter
@@ -35,5 +36,6 @@ module Consolation::LogSource
       response.stream.write("data: #{new_line}\n")
     end
     response.stream.write("data: \n\n")
+  end
   end
 end
