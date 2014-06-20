@@ -16,7 +16,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 4.0.4"
   s.add_dependency "jquery-rails"
-  s.add_dependency "jquery-easing-rails"
   s.add_dependency "zeroclipboard-rails"
   s.add_dependency "spinjs-rails"
 

@@ -44,7 +44,7 @@ class Console
   drag_end: (event) =>
     @copy_prompt.fadeTo(1.0, 30)
     clearTimeout(@current_timeout_id)
-    @copy_prompt.animate { top: @copy_prompt.offset().top - $(window).scrollTop() - 35, opacity: 0, width: @starting_width}, 500, 'easeInBack', =>
+    @copy_prompt.animate { top: @copy_prompt.offset().top - $(window).scrollTop() - 35, opacity: 0, width: @starting_width}, 500, =>
       @copy_prompt.removeClass('ready')
     @line_drag_to = $(event.delegateTarget).data('line')
     @element.find('.consolation-line').removeClass("selected")
@@ -61,7 +61,7 @@ class Console
 
   drag_cancel: (event) =>
     clearTimeout(@current_timeout_id)
-    @copy_prompt.animate { top: @copy_prompt.offset().top - $(window).scrollTop() + 35, opacity: 0, width: @starting_width}, 250, 'easeInBack', =>
+    @copy_prompt.animate { top: @copy_prompt.offset().top - $(window).scrollTop() + 35, opacity: 0, width: @starting_width}, 250, =>
       @copy_prompt.removeClass('ready')
 
     @line_drag_start = -1

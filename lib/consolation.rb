@@ -10,7 +10,6 @@ module Consolation
     class Engine < ::Rails::Engine
       require 'spinjs-rails'
       require 'zeroclipboard-rails'
-      require 'jquery-easing-rails'
     end
   end
 
