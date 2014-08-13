@@ -17,7 +17,7 @@ module Consolation
     options = defaults.merge(options)
     template_path   = File.expand_path("../views/console.html.erb", __FILE__)
     template_string = File.read(template_path)
-    rendered_text   = "<pre class='consolation'>" + log_output + "</pre>"
+    rendered_text   = "<pre class='consolation-console'>" + log_output + "</pre>"
     rendered_text.html_safe
   end
 end
