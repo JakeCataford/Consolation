@@ -21,11 +21,12 @@ module Loggable
     end
 
     def append_log_chunk(log_contents)
-      log_chunks.create!(content: log_content)
+      log_chunks.create!(content: log_contents)
     end
 
     def next_log_id
       @log_chunks_tail
     end
+
   end
 end
