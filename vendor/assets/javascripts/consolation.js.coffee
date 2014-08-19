@@ -1,14 +1,32 @@
+#= require ansi_stream
+
 class Console
 
-  @sub_ansi_colors: () ->
-  
+  ansi_replacement_regex: /\[([0-9]*)(;[0-9]*)?m/gi
+  ansi_replacement_map: {
+    "30" : "black",
+    "31" : "red",
+    "32" : "green",
+    "33" : "yellow",
+    "34" : "blue",
+    "35" : "magenta",
+    "36" : "cyan",
+    "37" : "white",
+    "39" : "bold"
+  }
+
+
+  sub_ansi_colors_in_string: (string) ->
+    stream = new AnsiStream()
+    stream.process(string)
+
   constructor: (element) ->
-    console.log(element.innerHtml)
+    element.html = @sub_ansi_colors_in_string(element.innerHTML)
 
 
 class Consolation
   constructor: () ->
-    consoles = document.querySelector('.consolation-console') 
+    consoles = document.querySelectorAll('.consolation-console')
     new Console(console) for console in consoles
 
 document.addEventListener "DOMContentLoaded", ->
