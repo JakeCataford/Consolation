@@ -8,6 +8,9 @@ module Loggable
     has_many :log_chunks, as: :loggable
     scope :log_chunks_tail, -> { @log_chunks.all(order: :id).last }
 
+    delegate :url_helpers, to: "Rails.application.routes"
+    alias :h :url_helpers
+
     def rollup_logs(content_field = :logs)
       log_chunks.each do |chunk|
         send(content_field) << chunk
@@ -24,8 +27,24 @@ module Loggable
       log_chunks.create!(content: log_contents)
     end
 
-    def next_log_id
-      @log_chunks_tail
+    def last_log_chunk_id
+      log_chunks.pluck(:id).max
+    end
+
+    def tail_url
+      url + "/tail?last_id=#{last_log_chunk_id}"
+    end
+
+    def url
+      h.send :"#{self.route}_url", parameterize
+    end
+
+    def route
+      self.class.name.parameterize
+    end
+
+    def parameterize
+      self.id
     end
 
   end
