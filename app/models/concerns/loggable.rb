@@ -23,6 +23,10 @@ module Loggable
       end
     end
 
+    def logs
+      log_chunks.map(&:content).join
+    end
+
     def append_log_chunk(log_contents)
       log_chunks.create!(content: log_contents)
     end
