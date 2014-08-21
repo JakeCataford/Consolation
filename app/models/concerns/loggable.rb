@@ -31,12 +31,12 @@ module Loggable
       log_chunks.pluck(:id).max
     end
 
-    def tail_url
-      url + "/tail?last_id=#{last_log_chunk_id}"
+    def tail_path
+      path + "/tail?last_id=#{last_log_chunk_id}"
     end
 
-    def url
-      h.send :"#{self.route}_url", parameterize
+    def path
+      h.send :"#{self.route}_path", parameterize
     end
 
     def route
