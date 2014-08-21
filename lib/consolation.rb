@@ -5,7 +5,7 @@ module Consolation
 
     initializer 'consolation.action_controller' do |app|
       ActiveSupport.on_load :action_controller do
-        helper Consolation::ConsolationHelper
+        helper ConsolationHelper
       end
     end
 
