@@ -6,7 +6,7 @@
       }
 
       options = defaults.merge(options)
-      next_poll_id = "data-next-log-url=#{loggable.tail_url}"
+      next_poll_id = "data-next-log-path=#{loggable.tail_path}"
       rendered_text   = "<pre class='consolation-console'>" + loggable.log_chunks.map(&:content).join("\n") + "</pre>"
       raw rendered_text
     end

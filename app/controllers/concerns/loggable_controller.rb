@@ -6,7 +6,7 @@ module LoggableController
     def tail
       chunks = @loggable.log_chunks.tail(params[:last_id])
       render json: {
-          tail_url: @loggable.tail_url,
+          tail_path: @loggable.tail_path,
           log_chunks: chunks,
           :"#{@loggable.class.name.parameterize}" => @loggable
         }
