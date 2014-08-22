@@ -47,15 +47,10 @@ class ConsolationConsole
       @next_url = @element.dataset.nextLogPath
       @poll_for_new_logs()
 
-
 class Consolation
   constructor: () ->
     consoles = document.querySelectorAll('.consolation-console')
     new ConsolationConsole(c) for c in consoles
-
-document.addEventListener "DOMContentLoaded", ->
-  consolation_controller = new Consolation()
-
 
 class AsyncRequestDelegate
   constructor: (@options) ->
@@ -70,4 +65,14 @@ class AsyncRequestDelegate
 
   start: ->
     @xmlhttp.send()
+
+ready = () ->
+  consolation_controller = new Consolation()
+
+document.addEventListener "DOMContentLoaded", ->
+  ready()
+
+document.addEventListener "page:load", ->
+  ready()
+
 
