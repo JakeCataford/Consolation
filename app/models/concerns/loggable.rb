@@ -3,7 +3,6 @@ module Loggable
 
   class ConsolationLogRollupError < StandardError; end
 
-
   included do
     has_many :log_chunks, as: :loggable
     scope :log_chunks_tail, -> { @log_chunks.all(order: :id).last }

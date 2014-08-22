@@ -15,13 +15,11 @@ class ConsolationConsole
     "39" : "bold"
   }
 
-
   sub_ansi_colors_in_string: (string) ->
     stream = new AnsiStream()
     stream.process(string)
 
   poll_for_new_logs: =>
-    console.log("REquest #{@next_url}")
     if(@next_url)
       request = new AsyncRequestDelegate({
         method:   "GET",
@@ -32,8 +30,6 @@ class ConsolationConsole
             e.content
           ).join("")
 
-          console.log(chunks)
-          console.log(content_to_append)
           @element.innerHTML = @element.innerHTML + content_to_append
           @next_url = response.tail_path
           setTimeout(@poll_for_new_logs, 1000)
@@ -47,7 +43,6 @@ class ConsolationConsole
 
   constructor: (@element) ->
     @element.html = @sub_ansi_colors_in_string(@element.innerHTML)
-    console.log(@element.dataset.nextLogPath)
     if(@element.dataset.nextLogPath)
       @next_url = @element.dataset.nextLogPath
       @poll_for_new_logs()
@@ -55,7 +50,6 @@ class ConsolationConsole
 
 class Consolation
   constructor: () ->
-    console.log "hello"
     consoles = document.querySelectorAll('.consolation-console')
     new ConsolationConsole(c) for c in consoles
 
