@@ -13,7 +13,6 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,config,db,lib,vendor}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
-  
-  s.add_dependency "ansi_stream"
+
   s.add_dependency "rails", ">= 4.0"
 end

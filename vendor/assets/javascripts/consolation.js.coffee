@@ -1,4 +1,4 @@
-#= require ansi_stream
+#= require ansi_up
 
 class ConsolationConsole
 
@@ -16,8 +16,7 @@ class ConsolationConsole
   }
 
   sub_ansi_colors_in_string: (string) ->
-    stream = new AnsiStream()
-    stream.process(string)
+    ansi_up.ansi_to_html(string);
 
   poll_for_new_logs: =>
     if(@next_url)
@@ -30,7 +29,9 @@ class ConsolationConsole
             e.content
           ).join("")
 
-          @element.innerHTML = @element.innerHTML + content_to_append
+          if(content_to_append)
+            @element.innerHTML = @element.innerHTML + @sub_ansi_colors_in_string(content_to_append)
+
           @next_url = response.tail_path
           setTimeout(@poll_for_new_logs, 1000)
         ,
@@ -42,7 +43,7 @@ class ConsolationConsole
       request.start()
 
   constructor: (@element) ->
-    @element.html = @sub_ansi_colors_in_string(@element.innerHTML)
+    @element.innerHTML = @sub_ansi_colors_in_string(@element.innerHTML)
     if(@element.dataset.nextLogPath)
       @next_url = @element.dataset.nextLogPath
       @poll_for_new_logs()
