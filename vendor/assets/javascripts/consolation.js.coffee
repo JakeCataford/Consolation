@@ -50,8 +50,8 @@ class ConsolationConsole
 class Consolation
   consoles: []
   constructor: () ->
-    @consoles = document.querySelectorAll('.consolation-console')
-    new ConsolationConsole(c) for c in @consoles
+    elements = document.querySelectorAll('.consolation-console')
+    @consoles.push(new ConsolationConsole(c)) for c in elements
 
 class AsyncRequestDelegate
   constructor: (@options) ->
