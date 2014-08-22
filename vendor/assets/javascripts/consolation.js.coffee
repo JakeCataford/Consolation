@@ -1,22 +1,17 @@
 #= require ansi_up
 
+window.Consolation = {}
+
 class ConsolationConsole
 
-  ansi_replacement_regex: /\[([0-9]*)(;[0-9]*)?m/gi
-  ansi_replacement_map: {
-    "30" : "black",
-    "31" : "red",
-    "32" : "green",
-    "33" : "yellow",
-    "34" : "blue",
-    "35" : "magenta",
-    "36" : "cyan",
-    "37" : "white",
-    "39" : "bold"
-  }
+  next_timeout_id: 0
+
+  dispatch_log_update_event: (event_data) =>
+    event = new CustomEvent("logs:update", { 'detail' : event_data })
+    document.dispatchEvent(event)
 
   sub_ansi_colors_in_string: (string) ->
-    ansi_up.ansi_to_html(string);
+    ansi_up.ansi_to_html(string)
 
   poll_for_new_logs: =>
     if(@next_url)
@@ -33,7 +28,8 @@ class ConsolationConsole
             @element.innerHTML = @element.innerHTML + @sub_ansi_colors_in_string(content_to_append)
 
           @next_url = response.tail_path
-          setTimeout(@poll_for_new_logs, 1000)
+          @dispatch_log_update_event(response.loggable)
+          @next_timeout_id = setTimeout(@poll_for_new_logs, 1000)
         ,
         error:    (response, status) =>
           console.log(response, status)
@@ -42,6 +38,9 @@ class ConsolationConsole
 
       request.start()
 
+  stop: =>
+    clearTimeout(@next_timeout_id)
+
   constructor: (@element) ->
     @element.innerHTML = @sub_ansi_colors_in_string(@element.innerHTML)
     if(@element.dataset.nextLogPath)
@@ -49,9 +48,10 @@ class ConsolationConsole
       @poll_for_new_logs()
 
 class Consolation
+  consoles: []
   constructor: () ->
-    consoles = document.querySelectorAll('.consolation-console')
-    new ConsolationConsole(c) for c in consoles
+    @consoles = document.querySelectorAll('.consolation-console')
+    new ConsolationConsole(c) for c in @consoles
 
 class AsyncRequestDelegate
   constructor: (@options) ->
@@ -68,12 +68,13 @@ class AsyncRequestDelegate
     @xmlhttp.send()
 
 ready = () ->
-  consolation_controller = new Consolation()
+  if(window.Consolation.consolation_controller)
+    c.stop() for c in window.Consolation.consolation_controller.consoles
+    consolation_controller = null
+  window.Consolation.consolation_controller = new Consolation()
 
 document.addEventListener "DOMContentLoaded", ->
   ready()
 
 document.addEventListener "page:load", ->
   ready()
-
-

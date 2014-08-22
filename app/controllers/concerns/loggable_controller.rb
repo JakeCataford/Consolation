@@ -7,7 +7,7 @@ module LoggableController
       render json: {
           tail_path: @loggable.tail_path,
           log_chunks: chunks,
-          :"#{@loggable.class.name.parameterize}" => @loggable
+          loggable: @loggable
         }
     end
   end
